@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uma Proposta Especial</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            animation: float 5s linear infinite;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            max-width: 500px;
+        }
+        
+        h1 {
+            color: #ff6b6b;
+            margin-bottom: 30px;
+        }
+        
+        .question {
+            font-size: 24px;
+            color: #ff6b6b;
+            margin-bottom: 40px;
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 15px 40px;
+            font-size: 18px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .btn-sim {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .btn-sim:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-nao {
+            background-color: #f44336;
+            color: white;
+            position: relative;
+        }
+        
+        .message {
+            font-size: 24px;
+            color: #ff6b6b;
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .image-container {
+            margin-top: 20px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 30px;
+            border: 5px solid #ff6b6b;
+
+        }
+        
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts" id="hearts"></div>
+    
+    <div class="container" id="container">
+        <div class="image-container">
+            <img src="https://i.pinimg.com/736x/84/bd/e3/84bde3ce4878d756dbee08da2dbaf617.jpg" alt="Imagem Romântica">
+        </div>
+        
+         <h1>Uma Proposta Especial</h1>
+        
+        <div class="question" id="question">
+            Vamos acasalar?
+        </div>
+        
+        <div class="buttons" id="buttons">
+            <button class="btn btn-sim" id="btnSim">Sim</button>
+            <button class="btn btn-nao" id="btnNao">Não</button>
+        </div>
+        
+        <div class="message" id="message">
+            Quando?
+        </div>
+    </div>
+
+    <script>
+        // Criar corações flutuantes
+        const heartsContainer = document.getElementById('hearts');
+        const numberOfHearts = 50;
+        
+        for (let i = 0; i < numberOfHearts; i++) {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤';
+            heart.style.left = `${Math.random() * 100}%`;
+            heart.style.animationDuration = `${Math.random() * 5 + 3}s`;
+            heart.style.animationDelay = `${Math.random() * 5}s`;
+            heart.style.fontSize = `${Math.random() * 20 + 10}px`;
+            heartsContainer.appendChild(heart);
+        }
+        
+        // Botão NÃO se move aleatoriamente
+        const btnNao = document.getElementById('btnNao');
+        const container = document.getElementById('container');
+        
+        btnNao.addEventListener('mouseover', function() {
+            // Obter dimensões do container
+            const containerRect = container.getBoundingClientRect();
+            const btnRect = btnNao.getBoundingClientRect();
+            
+            // Calcular nova posição aleatória dentro do container
+            const maxX = containerRect.width - btnRect.width;
+            const maxY = containerRect.height - btnRect.height;
+            
+            const newX = Math.random() * maxX;
+            const newY = Math.random() * maxY;
+            
+            // Posicionar o botão
+            btnNao.style.position = 'absolute';
+            btnNao.style.left = `${newX}px`;
+            btnNao.style.top = `${newY}px`;
+        });
+        
+        // Botão SIM mostra a mensagem
+        const btnSim = document.getElementById('btnSim');
+        const question = document.getElementById('question');
+        const message = document.getElementById('message');
+        const buttons = document.getElementById('buttons');
+        
+        btnSim.addEventListener('click', function() {
+            question.style.display = 'none';
+            buttons.style.display = 'none';
+            message.style.display = 'block';
+        });
+    </script>
+</body>
+</html>
